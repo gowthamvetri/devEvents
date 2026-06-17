@@ -9,18 +9,18 @@ interface MongooseConnection {
 // Declare global to avoid TypeScript errors with globalThis
 declare global {
   // eslint-disable-next-line no-var
-  var mongooseCache: MongooseConnection;
+  var mongooseCache: MongooseConnection | undefined;
 }
 
 // Initialize cache object
-const cached: MongooseConnection = global.mongooseCache ?? {
+const cached: MongooseConnection = globalThis.mongooseCache ?? {
   conn: null,
   promise: null,
 };
 
 // Update global cache reference
-if (!global.mongooseCache) {
-  global.mongooseCache = cached;
+if (!globalThis.mongooseCache) {
+  globalThis.mongooseCache = cached;
 }
 
 /**
